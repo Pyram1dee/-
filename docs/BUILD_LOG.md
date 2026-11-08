@@ -41,3 +41,5 @@
 | 2026-11-08 | 5 | `apply_zclass_models.py` (HUMAN) на копии `zombieplague.ini` | OK: без файлов — без изменений, с 2 файлами — HUMAN из 2 моделей, повтор идемпотентен |
 | 2026-11-08 | — | Полная пересборка (12 плагинов, включая Poison Launcher) | OK, 0 предупреждений. Runtime на HLDS не проверялся |
 | 2026-11-08 | 3 | `cso_human_dodge.sma` (своя реализация вместо `zp_human_dodge`) | OK, 0 предупреждений. Runtime не проверялся |
+| 2026-11-08 | 2 | `cso_zclass_undertaker.sma` 0.2.0 (механика Stamper) | OK, 0 предупреждений. Runtime не проверялся |
+| 2026-11-08 | 5 | `apply_zclass_models.py` + CLAWMODEL на копии ini | OK: без файла когтей — без изменений, с файлом — меняется строка CLAWMODEL |

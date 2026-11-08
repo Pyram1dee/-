@@ -37,7 +37,22 @@ def main():
         if s.startswith("[") and s.endswith("]"):
             section = s[1:-1]
             continue
-        if section in mapping and s.split("=", 1)[0].strip() == "MODELS":
+        key = s.split("=", 1)[0].strip()
+        claw_key = f"{section}.claw"
+        if claw_key in mapping and key == "CLAWMODEL":
+            seen.add(claw_key)
+            claw = mapping[claw_key][0]
+            if not (cs / "models" / "zombie_plague" / claw).is_file():
+                print(f"[zclass_models] {section}: нет models/zombie_plague/{claw} — когти не меняю")
+                continue
+            new = "CLAWMODEL = " + claw
+            if s != new:
+                lines[i] = new
+                raw_lines[i] = new + raw_lines[i][len(raw_lines[i].rstrip("\r\n")):]
+                changed += 1
+                print(f"[zclass_models] {section}: {s} -> {new}")
+            continue
+        if section in mapping and key == "MODELS":
             seen.add(section)
             models = mapping[section]
             missing = [m for m in models if not (cs / "models" / "player" / m / f"{m}.mdl").is_file()]
