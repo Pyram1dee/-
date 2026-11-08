@@ -80,6 +80,12 @@ deploy_plugins() {
   # собственные модели проекта
   mkdir -p "$CS/models/cso"
   cp -f "$ROOT"/assets/models/cso/*.mdl "$CS/models/cso/"
+  # локальные замены пользователя (не в git): vendor/assets_override/<путь на сервере>
+  if [[ -d "$VENDOR/assets_override" ]]; then
+    log "Локальные замены ресурсов из vendor/assets_override:"
+    (cd "$VENDOR/assets_override" && find . -type f -print) | sed 's/^/  /'
+    cp -rf "$VENDOR/assets_override/." "$CS/"
+  fi
 
   cp -f "$ROOT/config/cso_custom.cfg" "$CS/addons/amxmodx/configs/"
   local amxxcfg="$CS/addons/amxmodx/configs/amxx.cfg"

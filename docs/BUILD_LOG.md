@@ -30,3 +30,4 @@
 | 2026-11-08 | 5 | `tools/mdl/build_models.py` → `coffin.mdl`, `zombitrap.mdl`, `v_hammer.mdl`, `p_hammer.mdl` | OK |
 | 2026-11-08 | 5 | `tools/mdl/validate.py` | OK: воспроизводимость байт-в-байт, обход 100 % по часовой, ошибка анимации ≤ 0.016 юнита, габариты в bbox плагинов. Клиент CS 1.6 не запускался |
 | 2026-11-08 | 5 | `cso_zclass_undertaker` (bbox 64, HULL_HUMAN), `cso_zclass_heavy`, `cso_vip_hammer` | OK, 0 предупреждений |
+| 2026-11-08 | 5 | `v_hammer.mdl` пользователя (`hammer.zip`) через `tools/mdl/check_model.py --knife` | OK: формат, 8 анимаций ножа, все кадры, обход 100 %. Установлен как локальная замена, не в git. В клиенте не проверялся |
