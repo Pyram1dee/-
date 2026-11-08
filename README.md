@@ -21,3 +21,13 @@
 
 ## Ограничения
 Ни исходные игровые архивы из старого проекта, ни модели, ни готовые AMXX-файлы в комплект не включены. Они должны быть получены и проверены отдельно.
+
+## Сборка и тестовый сервер (текущее состояние)
+- Зависимости: `vendor/amxmodx` (AMXX 1.9 git5303), `vendor/zp43fix5a` (ZP 4.3 Fix5a), `vendor/include/zombieplague.inc` — см. `docs/ENVIRONMENT.md`.
+- Сборка: `./scripts/build.sh` → `build/plugins/*.amxx`, лог в `build/logs/`. Журнал — `docs/BUILD_LOG.md`.
+- Проверки: `python3 scripts/check_project.py`, `python3 scripts/check_cvars.py`.
+- Сервер: `./scripts/server.sh install`, затем `./scripts/server.sh smoke de_dust2 25`.
+- Клиент: `bind g cso_skill` (или пользоваться G=drop / E=+use / R=+reload при `cso_skill_hardkeys 1`), чат `/skill`, `/shop`, `/hammer`.
+- Чек-листы: `tests/TEST_CLASSES.md`, `tests/TEST_ROUNDS_SHOP.md`, `tests/TEST_VIP.md`, `tests/ACCEPTANCE.md`.
+
+Все модули компилируются без предупреждений, но **на HLDS ещё не запускались**.

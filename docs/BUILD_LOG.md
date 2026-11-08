@@ -22,3 +22,7 @@
 | 2026-11-08 | 3 | `cso_human_shop.sma` | OK, 0 предупреждений |
 | 2026-11-08 | 3 | `tests/compile/test_shop_api.sma` (потребитель `cso_shop.inc`) | OK |
 | 2026-11-08 | 3 | Poison Launcher adapter | НЕ НАЧАТ: нет архива `9778_-_amxx_public_poison_launcher_1.8.1.rar` |
+| 2026-11-08 | 4 | `cso_vip_hammer.sma` | OK, 0 предупреждений |
+| 2026-11-08 | 4 | Полная пересборка 11 плагинов | OK, 0 предупреждений |
+| 2026-11-08 | 4 | `scripts/check_cvars.py` | OK: 58 CVAR в `cso_custom.cfg` совпадают с `register_cvar` |
+| 2026-11-08 | 1 | `scripts/server.sh` | Написан, **не запускался** (нужно разрешение на запуск SteamCMD/HLDS). Сервер НЕ протестирован |

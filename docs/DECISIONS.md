@@ -35,3 +35,10 @@
 - 500 HP: по умолчанию HP каждому стартовому Deimos (`cso_deimos_round_hp_mode 0`); режим 1 — HP × число людей. **Открытый вопрос** — подтвердить.
 - Human Shop: свой реестр предметов + API `cso_shop.inc` (native `cso_shop_register_item`, forward `cso_shop_item_bought`) для внешних предметов. Встроенные: сначала выдача и проверка, потом списание; внешние: списание, forward, возврат при PLUGIN_HANDLED (как в `zp_extra_item_selected` ZP).
 - Poison Launcher 1.8.1 — адаптер не пишем до получения архива и проверки его лицензии/API.
+
+## 2026-11-08 — этап 4 (VIP) и сервер
+- VIP — штатные флаги AMXX (`users.ini`), флаг по умолчанию `t` (`cso_vip_flag`, предложение).
+- VIP Hammer — это нож VIP-человека (не выжившего); бонусы только пока нож в руках, поэтому огнестрел и покупки не затронуты. Вторичная атака ножа блокируется — отдельной усиленной атаки нет.
+- Отбрасывание: `cso_vip_hammer_knockback` (база, юнит/с) × `cso_vip_hammer_knockback_multiplier`.
+- Порядок загрузки: модули CSO дописываются в конец `plugins-zplague.ini` — post-хуки ResetMaxSpeed должны срабатывать после ядра ZP; порядок отдельных `plugins-*.ini` AMXX не гарантирует.
+- Тестовый сервер: SteamCMD (app 90, cstrike) + Metamod-P 1.21p37 (SourceForge) + AMXX 1.9 git5303 + ZP 4.3 Fix5a, собранный нами. `sv_maxspeed 400` для Хищника.
