@@ -88,10 +88,13 @@ stock bool:cso_is_class_zombie(id)
 {
 	if (g_cso_class < 0 || !cso_is_valid_player(id) || !is_user_alive(id))
 		return false
-	if (!zp_get_user_zombie(id) || zp_get_user_nemesis(id))
+	if (!zp_get_user_zombie(id))
 		return false
+	// выданная способность действует и у немезиды (Deimos в Deimos Round)
 	if (g_cso_granted[id])
 		return true
+	if (zp_get_user_nemesis(id))
+		return false
 	return (zp_get_user_zombie_class(id) == g_cso_class)
 }
 

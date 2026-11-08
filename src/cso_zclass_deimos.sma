@@ -6,7 +6,7 @@
  * Клавиша: предложение G (drop), подтвердить.
  *
  * API для Deimos Round (library "cso_deimos"):
- *   native cso_deimos_grant(id)        — выдать способность зомби на текущую жизнь
+ *   native cso_deimos_grant(id)        — выдать способность зомби (в т.ч. немезиде) на текущую жизнь
  *   native cso_deimos_get_class()      — id класса ZP
  */
 
@@ -65,7 +65,8 @@ public plugin_init()
 
 public native_grant(id)
 {
-	if (!cso_is_valid_player(id) || !is_user_alive(id) || !zp_get_user_zombie(id) || zp_get_user_nemesis(id))
+	// немезида допускается: так Deimos Round делает единственного Deimos
+	if (!cso_is_valid_player(id) || !is_user_alive(id) || !zp_get_user_zombie(id))
 		return false
 	g_cso_granted[id] = true
 	cso_reset_cooldown(id)
