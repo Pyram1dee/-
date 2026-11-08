@@ -88,3 +88,4 @@
 - Привилегии: VIP `t`, Gold `s` — независимы; бонусы не суммируются (старшая — Gold), сами бонусы на согласовании и не начисляются.
 - Структура: `src/` → `source/` (ТЗ §15); `INSTALL.md`; список недостающего — `docs/MISSING_RESOURCES.md`.
 - 2026-11-08 (подтверждено пользователем): отключение стандартных классов ZP; `zp_buy_custom 0`; магазин зомби/классы через Game Menu ZP; Deimos Round HP 500; джетпак в VIP меню; «Poison» = Poison Launcher; Speed Knife = Katana Gold.
+- 2026-11-08 (подтверждено): Axe = Nata (`single-nata-knife`), Dagger = `v_razor` (`1148_male`), Speed Knife — Katana Gold без изменений. Модели — локальные замены `vendor/assets_override/models/cso/{v,p}_{axe,dagger}.mdl`, в git не входят. `cso_katana` и `SHEEPSWORD` не используются (лишние ножи ТЗ запрещает).
