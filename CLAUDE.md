@@ -7,7 +7,7 @@ Goal: implement a reproducible, maintainable Counter-Strike 1.6 Zombie Plague 4.
 Rules:
 1. Never claim a plugin compiles or works unless you actually compile/test it.
 2. Preserve original ZP 4.3 FIX API compatibility. Do not use ZA.RU or REZP as the base.
-3. Write AMX Mod X Pawn source in `src/`; generated `.amxx` goes to `build/plugins/` and is not committed.
+3. Write AMX Mod X Pawn source in `source/` (renamed from `src/` per TECH_SPEC §15); generated `.amxx` goes to `build/plugins/` and is not committed.
 4. Avoid editing core ZP when an independent plugin can do the job.
 5. Do not invent or redistribute copyrighted Valve/Nexon/third-party models, sounds or binaries. Keep manifest entries and request legally obtained assets.
 6. Add CVARs for gameplay balance, defensive entity cleanup, round-state checks and cooldowns.

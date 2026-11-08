@@ -3,7 +3,7 @@
  *
  * Правила (подтверждены пользователем 2026-11-08):
  *  - Deimos один на весь раунд;
- *  - 20000 HP (cso_deimos_round_hp);
+ *  - HP в CFG (cso_deimos_round_hp); тестовое значение по итоговому ТЗ — 500 (ранее обсуждалось 20000);
  *  - урон по людям: удар ЛКМ 500 (cso_deimos_round_dmg_slash), ПКМ 1000 (cso_deimos_round_dmg_stab);
  *  - Deimos не заражает, а убивает.
  *
@@ -34,6 +34,8 @@
 
 #pragma reqlib cso_deimos
 native cso_deimos_grant(id)
+#pragma reqlib cso_hud
+native cso_hud_set_mode(const name[])
 
 enum
 {
@@ -56,7 +58,7 @@ public plugin_init()
 	g_pcv_enable      = register_cvar("cso_deimos_round_enable", "1")
 	g_pcv_chance      = register_cvar("cso_deimos_round_chance", "10")     // % от раундов заражения
 	g_pcv_min_players = register_cvar("cso_deimos_round_min_players", "4")
-	g_pcv_hp          = register_cvar("cso_deimos_round_hp", "20000")
+	g_pcv_hp          = register_cvar("cso_deimos_round_hp", "500")     // тестовое значение по ТЗ §11
 	g_pcv_slash       = register_cvar("cso_deimos_round_dmg_slash", "500")  // ЛКМ
 	g_pcv_stab        = register_cvar("cso_deimos_round_dmg_stab", "1000")  // ПКМ
 
@@ -147,7 +149,8 @@ public task_make_deimos()
 	new name[32]
 	get_user_name(id, name, charsmax(name))
 	set_hudmessage(200, 30, 30, -1.0, 0.25, 1, 0.0, 5.0, 1.0, 1.0, -1)
-	ShowSyncHudMsg(0, g_hud, "DEIMOS ROUND^n%s — Deimos (%d HP)", name, floatround(hp))
+	ShowSyncHudMsg(0, g_hud, "РАУНД ДЕЙМОСА^n%s — Деймос (%d HP)", name, floatround(hp))
+	cso_hud_set_mode("Раунд Деймоса")
 	log_amx("[CSO] Deimos Round начат: Deimos #%d (%s), HP %d", id, name, floatround(hp))
 }
 

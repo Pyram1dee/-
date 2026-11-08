@@ -17,7 +17,7 @@
 
 #define TASK_END 51200
 
-new const ZC_NAME[]  = "Invisible"
+new const ZC_NAME[]  = "Невидимка"
 new const ZC_INFO[]  = "Невидимость [G]"
 new const ZC_MODEL[] = "zombie_source"
 new const ZC_CLAW[]  = "v_knife_zombie.mdl"
@@ -42,7 +42,7 @@ public plugin_init()
 	g_pcv_alpha    = register_cvar("cso_invisible_alpha", "20")    // 0 — полностью невидим, 255 — обычный
 	g_pcv_cooldown = register_cvar("cso_invisible_cooldown", "30.0")
 
-	cso_skill_init(CSO_KEY_G, g_pcv_cooldown)
+	cso_skill_init(CSO_KEY_G, g_pcv_cooldown, ZC_NAME)
 
 	RegisterHam(Ham_Killed, "player", "fw_Killed_Post", 1)
 	register_event("HLTV", "ev_new_round", "a", "1=0", "2=0")

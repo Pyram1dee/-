@@ -22,7 +22,7 @@
 
 new const BEAM_SPRITE[] = "sprites/laserbeam.spr" // есть в базовой CS 1.6
 
-new const ZC_NAME[]  = "Deimos"
+new const ZC_NAME[]  = "Деймос"
 new const ZC_INFO[]  = "Шок: выбивает оружие [G]"
 new const ZC_MODEL[] = "zombie_source"
 new const ZC_CLAW[]  = "v_knife_zombie.mdl"
@@ -57,7 +57,7 @@ public plugin_init()
 	g_pcv_cooldown = register_cvar("cso_deimos_cooldown", "20.0")
 	g_pcv_survivor = register_cvar("cso_deimos_affect_survivor", "0")
 
-	cso_skill_init(CSO_KEY_G, g_pcv_cooldown)
+	cso_skill_init(CSO_KEY_G, g_pcv_cooldown, ZC_NAME)
 
 	RegisterHam(Ham_Killed, "player", "fw_Killed_Post", 1)
 	register_event("HLTV", "ev_new_round", "a", "1=0", "2=0")

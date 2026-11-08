@@ -22,7 +22,7 @@ import goldsrc_mdl as g  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 ASSETS = ROOT / "assets" / "models" / "cso"
 KNIFE_SEQ = ["idle", "slash1", "slash2", "draw", "stab", "stab_miss", "midslash1", "midslash2"]
-# bbox сущностей из плагинов (src/cso_zclass_undertaker.sma, src/cso_zclass_heavy.sma)
+# bbox сущностей из плагинов (source/cso_zclass_undertaker.sma, source/cso_zclass_heavy.sma)
 LIMITS = {"coffin.mdl": ((-16, -16, 0), (16, 16, 64)), "zombitrap.mdl": ((-16, -16, 0), (16, 16, 12))}
 
 errors = []

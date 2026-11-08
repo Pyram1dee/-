@@ -29,7 +29,7 @@ def main():
         return 0
     mapping = load_map(cfg)
     # окончания строк сохраняем построчно (в файле ZP они смешанные CRLF/LF)
-    raw_lines = ini.read_bytes().decode("latin-1").splitlines(keepends=True)
+    raw_lines = ini.read_bytes().decode("utf-8", errors="surrogateescape").splitlines(keepends=True)
     lines = [ln.rstrip("\r\n") for ln in raw_lines]
     section, seen, changed = None, set(), 0
     for i, line in enumerate(lines):
@@ -68,7 +68,7 @@ def main():
     for sec in set(mapping) - seen:
         print(f"[zclass_models] секции [{sec}] нет в zp_zombieclasses.ini — запустите карту один раз и повторите deploy")
     if changed:
-        ini.write_bytes("".join(raw_lines).encode("latin-1"))
+        ini.write_bytes("".join(raw_lines).encode("utf-8", errors="surrogateescape"))
     return 0
 
 
@@ -85,7 +85,7 @@ def apply_human_models(cs, cfg=None):
     if not present:
         print("[human_models] ни одной модели нет — HUMAN не меняется")
         return
-    raw_lines = ini.read_bytes().decode("latin-1").splitlines(keepends=True)
+    raw_lines = ini.read_bytes().decode("utf-8", errors="surrogateescape").splitlines(keepends=True)
     new = "HUMAN = " + " , ".join(present)
     for i, ln in enumerate(raw_lines):
         body = ln.rstrip("\r\n")
@@ -93,7 +93,7 @@ def apply_human_models(cs, cfg=None):
             if body != new:
                 print(f"[human_models] {body} -> {new}")
                 raw_lines[i] = new + ln[len(body):]
-                ini.write_bytes("".join(raw_lines).encode("latin-1"))
+                ini.write_bytes("".join(raw_lines).encode("utf-8", errors="surrogateescape"))
             return
     print("[human_models] строки HUMAN нет в zombieplague.ini")
 

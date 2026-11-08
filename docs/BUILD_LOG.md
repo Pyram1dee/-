@@ -48,3 +48,5 @@
 | 2026-11-08 | — | Полная пересборка (14 плагинов) | OK, 0 предупреждений; CVAR 75/75. Runtime не проверялся |
 | 2026-11-08 | 4 | `cso_human_shop.sma` 0.2.0 (VIP меню, лимит по раундам), `cso_jetpack` (категория VIP) | OK, 0 предупреждений; 14 плагинов; CVAR 76/76. Runtime не проверялся |
 | 2026-11-08 | 3 | `cso_deimos_round.sma` 0.2.0 (1 Deimos-немезида, 20000 HP, 500/1000), `cso_zclass_deimos`, `cso_common.inc` | OK, 0 предупреждений; 14 плагинов. Runtime не проверялся |
+| 2026-11-08 | ТЗ-2 | `cso_privileges`, `cso_hud`, `cso_knives`, `cso_weapons_menu`, `cso_human_shop` 0.3.0, `cso_player_models`, `cso_main_menu` | OK; исправлены 3 предупреждения (tag mismatch ×2, неиспользуемое имя в патче Poison) |
+| 2026-11-08 | ТЗ-2 | Полная пересборка: 19 плагинов (17 своих + Poison Launcher + Jetpack) после переезда `src/`→`source/` | OK, 0 предупреждений; CVAR 104 + 4 ядра ZP, ошибок 0; модели — ошибок нет. **Runtime не проверялся** |

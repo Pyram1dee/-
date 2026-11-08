@@ -29,7 +29,7 @@ new const TRAP_MODEL_FALLBACK[] = "models/w_weaponbox.mdl"
 new const Float:TRAP_MINS[3] = { -16.0, -16.0, 0.0 }
 new const Float:TRAP_MAXS[3] = { 16.0, 16.0, 12.0 }
 
-new const ZC_NAME[]  = "Heavy"
+new const ZC_NAME[]  = "Толстяк"
 new const ZC_INFO[]  = "Ловушка [R]"
 new const ZC_MODEL[] = "zombie_source"
 new const ZC_CLAW[]  = "v_knife_zombie.mdl"
@@ -60,7 +60,7 @@ public plugin_init()
 	g_pcv_survivor = register_cvar("cso_heavy_affect_survivor", "0")
 	g_pcv_spacing  = register_cvar("cso_heavy_trap_spacing", "48.0")
 
-	cso_skill_init(CSO_KEY_R, g_pcv_cooldown)
+	cso_skill_init(CSO_KEY_R, g_pcv_cooldown, ZC_NAME)
 
 	register_think(TRAP_CLASS, "fw_trap_think")
 	register_touch(TRAP_CLASS, "player", "fw_trap_touch")

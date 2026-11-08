@@ -6,7 +6,7 @@
  *
  * Плагин класса обязан:
  *   1. в plugin_precache записать id класса в g_cso_class (результат zp_register_zombie_class);
- *   2. в plugin_init вызвать cso_skill_init(CSO_KEY_x, "pcvar кулдауна");
+ *   2. в plugin_init вызвать cso_skill_init(CSO_KEY_x, pcvar кулдауна, имя класса);
  *   3. определить функцию  bool:cso_skill_activate(id)  — запуск способности;
  *      вернуть true, если способность сработала (тогда запускается кулдаун).
  *
@@ -28,6 +28,11 @@
 #include <fakemeta>
 #include <hamsandwich>
 #include <zombieplague>
+
+// HUD (cso_hud.amxx): имя класса и перезарядка способности
+#pragma reqlib cso_hud
+native cso_hud_class(classid, const name[])
+native cso_hud_cooldown(id, Float:ready_time)
 
 #define CSO_MAXPLAYERS 32
 
@@ -58,8 +63,10 @@ new bool:g_cso_granted[CSO_MAXPLAYERS + 1]
 // Регистрация
 // --------------------------------------------------------------------------
 
-stock cso_skill_init(key, pcvar_cooldown)
+stock cso_skill_init(key, pcvar_cooldown, const classname[])
 {
+	if (g_cso_class >= 0)
+		cso_hud_class(g_cso_class, classname)
 	g_cso_key = key
 	g_cso_pcv_cooldown = pcvar_cooldown
 	g_cso_pcv_hardkeys = register_cvar("cso_skill_hardkeys", "1")
@@ -108,6 +115,8 @@ stock bool:cso_is_frozen(id)
 stock cso_reset_cooldown(id)
 {
 	g_cso_next_use[id] = 0.0
+	if (1 <= id <= CSO_MAXPLAYERS)
+		cso_hud_cooldown(id, 0.0)
 }
 
 // --------------------------------------------------------------------------
@@ -138,6 +147,7 @@ stock bool:cso_skill_try(id)
 	new Float:cd = get_pcvar_float(g_cso_pcv_cooldown)
 	if (cd < 0.0) cd = 0.0
 	g_cso_next_use[id] = now + cd
+	cso_hud_cooldown(id, g_cso_next_use[id])
 	return true
 }
 

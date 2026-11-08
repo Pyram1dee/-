@@ -20,7 +20,7 @@
 
 #define TASK_END 51600
 
-new const ZC_NAME[]  = "Nurse"
+new const ZC_NAME[]  = "Медсестра"
 new const ZC_INFO[]  = "Гравитация [R]"
 new const ZC_MODEL[] = "zombie_source"
 new const ZC_CLAW[]  = "v_knife_zombie.mdl"
@@ -47,7 +47,7 @@ public plugin_init()
 	g_pcv_duration = register_cvar("cso_nurse_duration", "8.0")
 	g_pcv_cooldown = register_cvar("cso_nurse_cooldown", "20.0")
 
-	cso_skill_init(CSO_KEY_R, g_pcv_cooldown)
+	cso_skill_init(CSO_KEY_R, g_pcv_cooldown, ZC_NAME)
 
 	RegisterHam(Ham_Killed, "player", "fw_Killed_Post", 1)
 	register_event("HLTV", "ev_new_round", "a", "1=0", "2=0")

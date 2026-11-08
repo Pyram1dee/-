@@ -19,7 +19,8 @@ OUT = ROOT / "build" / "thirdparty" / "cso_poison_launcher.sma"
 PATCHES = [
     # --- метаданные
     ('#define VERSION "1.8.1"', '#define VERSION "1.8.1-cso1"', "пометка адаптированной версии"),
-    ("new const g_item_cost = 1 ; // Item cost\n", "// CSO: цена — CVAR cso_poison_launcher_cost (Human Shop)\n", "цена из CVAR"),
+    ('new const g_item_name[] = { "Poison Launcher" }; // Item name\n', "// CSO: название — позиция «Poison» Human Shop\n", "имя из слота магазина"),
+    ("new const g_item_cost = 1 ; // Item cost\n", "// CSO: цена — CVAR cso_shop_cost_poison (Human Shop)\n", "цена из CVAR"),
     # --- 1. пути ресурсов приведены к содержимому архива (иначе precache отсутствующего файла роняет сервер)
     ('"sprites/zm/poison_spr.spr"', '"sprites/poison_spr.spr"', "путь спрайта как в архиве"),
     ('"sprites/zm/poison_flare.spr"', '"sprites/poison_flare.spr"', "путь спрайта как в архиве"),
@@ -28,8 +29,9 @@ PATCHES = [
     # --- 2. покупка только через Human Shop, цена из CVAR
     ("#include <zombieplague>\n", "#include <zombieplague>\n#include <cso_shop>\n", "API магазина CSO"),
     ("\tg_itemid = zp_register_extra_item(g_item_name, g_item_cost, ZP_TEAM_HUMAN)\n",
-     '\t// CSO: не регистрируемся в extra items ZP (там цена 1 AP) — только Human Shop\n'
-     '\tg_itemid = cso_shop_register_item_cvar(g_item_name, "cso_poison_launcher_cost", "30", CSO_SHOP_CAT_SPECIAL)\n'
+     '\t// CSO: не регистрируемся в extra items ZP (там цена 1 AP) — только позиция «Poison» Human Shop\n'
+     '\t// (страница 1, пункт 5; цена cso_shop_cost_poison, лимит cso_shop_limit_poison)\n'
+     '\tg_itemid = cso_shop_bind("poison")\n'
      '\tregister_event("HLTV", "cso_ev_new_round", "a", "1=0", "2=0")\n',
      "регистрация в Human Shop"),
     ("public zp_extra_item_selected(id, itemid)\n{\n\tif(itemid == g_itemid) \n\t{\n",

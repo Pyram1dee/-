@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Компиляция всех src/*.sma установленным компилятором AMXX.
+# Компиляция всех source/*.sma установленным компилятором AMXX.
 # Ожидает AMX Mod X 1.9 в vendor/amxmodx (addons/amxmodx/scripting).
 # Include ZP 4.3 FIX (zombieplague.inc) кладётся в vendor/include/.
 # Результат: build/plugins/*.amxx, лог: build/logs/build-<дата>.log
@@ -21,10 +21,10 @@ mkdir -p "$OUT" "$LOGDIR"
 fail=0
 INC=(-i"$SCRIPTING/include")
 [[ -d "$ROOT/vendor/include" ]] && INC+=(-i"$ROOT/vendor/include")
-[[ -d "$ROOT/src/include" ]] && INC+=(-i"$ROOT/src/include")
+[[ -d "$ROOT/source/include" ]] && INC+=(-i"$ROOT/source/include")
 
 shopt -s nullglob
-files=("$ROOT"/src/*.sma)
+files=("$ROOT"/source/*.sma)
 if [[ $# -gt 0 ]]; then
   files=("$@")
 else

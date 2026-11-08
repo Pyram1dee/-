@@ -40,8 +40,8 @@ new const SPR_EXPLODE[] = "sprites/zerogxplode.spr"
 new const SPR_RING[]    = "sprites/shockwave.spr"
 new const SND_EXPLODE[] = "weapons/explode3.wav"
 
-new const ZC_NAME[]  = "Undertaker"
-new const ZC_INFO[]  = "Iron Maiden [G]"
+new const ZC_NAME[]  = "Гробовщик"
+new const ZC_INFO[]  = "Железная дева [G]"
 new const ZC_MODEL[] = "zombie_source"
 new const ZC_CLAW[]  = "v_knife_zombie.mdl"
 const ZC_HEALTH      = 2500
@@ -86,7 +86,7 @@ public plugin_init()
 	g_pcv_exp_damage  = register_cvar("cso_undertaker_explode_damage", "0")
 	g_pcv_exp_expire  = register_cvar("cso_undertaker_explode_on_expire", "1")
 
-	cso_skill_init(CSO_KEY_G, g_pcv_cooldown)
+	cso_skill_init(CSO_KEY_G, g_pcv_cooldown, ZC_NAME)
 
 	register_think(COFFIN_CLASS, "fw_coffin_think")
 	RegisterHam(Ham_TakeDamage, "info_target", "fw_TakeDamage_Pre")
@@ -108,24 +108,24 @@ public bool:cso_skill_activate(id)
 	new flags = pev(id, pev_flags)
 	if (!(flags & FL_ONGROUND))
 	{
-		client_print(id, print_center, "[CSO] Iron Maiden нельзя ставить в воздухе")
+		client_print(id, print_center, "[CSO] железную деву нельзя ставить в воздухе")
 		return false
 	}
 	if (flags & FL_DUCKING)
 	{
-		client_print(id, print_center, "[CSO] Iron Maiden нельзя ставить сидя")
+		client_print(id, print_center, "[CSO] железную деву нельзя ставить сидя")
 		return false
 	}
 	if (count_coffins(id) >= max_coffins)
 	{
-		client_print(id, print_center, "[CSO] Iron Maiden уже стоит")
+		client_print(id, print_center, "[CSO] Железная дева уже стоит")
 		return false
 	}
 
 	new Float:origin[3]
 	if (!find_place(id, origin))
 	{
-		client_print(id, print_center, "[CSO] Здесь нельзя поставить Iron Maiden")
+		client_print(id, print_center, "[CSO] Здесь нельзя поставить железную деву")
 		return false
 	}
 	if (!create_coffin(id, origin))
@@ -440,7 +440,7 @@ explode(ent)
 	}
 
 	if (cso_is_valid_player(owner))
-		client_print(owner, print_center, "[CSO] Iron Maiden взорвалась")
+		client_print(owner, print_center, "[CSO] Железная дева взорвалась")
 }
 
 explosion_fx(const Float:c[3])

@@ -22,7 +22,7 @@
 // звук из комплекта ZP 4.3 Fix5a
 new const SCREAM_SOUND[] = "zombie_plague/zombie_madness1.wav"
 
-new const ZC_NAME[]  = "Shaman"
+new const ZC_NAME[]  = "Шаман"
 new const ZC_INFO[]  = "Крик [E]"
 new const ZC_MODEL[] = "zombie_source"
 new const ZC_CLAW[]  = "v_knife_zombie.mdl"
@@ -51,7 +51,7 @@ public plugin_init()
 	g_pcv_cooldown  = register_cvar("cso_shaman_cooldown", "25.0")
 	g_pcv_survivor  = register_cvar("cso_shaman_affect_survivor", "0")
 
-	cso_skill_init(CSO_KEY_E, g_pcv_cooldown)
+	cso_skill_init(CSO_KEY_E, g_pcv_cooldown, ZC_NAME)
 
 	g_msg_shake = get_user_msgid("ScreenShake")
 	g_msg_fade  = get_user_msgid("ScreenFade")

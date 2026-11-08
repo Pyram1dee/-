@@ -95,9 +95,13 @@ deploy_plugins() {
   # модели классов зомби: только если файлы есть на сервере (иначе ZP роняет сервер на precache)
   python3 -I "$ROOT/scripts/apply_zclass_models.py" "$CS"
 
-  cp -f "$ROOT/config/cso_custom.cfg" "$CS/addons/amxmodx/configs/"
+  # стандартные классы ZP не по ТЗ §6 — отключить
+  sed -i 's/^zp_zclasses40.amxx/;zp_zclasses40.amxx/' "$ini"
+  cp -f "$ROOT/config/cso_custom.cfg" "$ROOT/config/cso_knives.ini" "$ROOT/config/cso_player_models.ini" "$CS/addons/amxmodx/configs/"
   local amxxcfg="$CS/addons/amxmodx/configs/amxx.cfg"
   grep -q 'cso_custom.cfg' "$amxxcfg" || echo 'exec addons/amxmodx/configs/cso_custom.cfg' >> "$amxxcfg"
+  # все меню и сообщения — на русском (ТЗ §1); язык AMXX/ZP по умолчанию
+  if grep -q '^amx_language' "$amxxcfg"; then sed -i 's/^amx_language.*/amx_language "ru"/' "$amxxcfg"; else echo 'amx_language "ru"' >> "$amxxcfg"; fi
 
   # Ускорение Хищника упирается в sv_maxspeed (по умолчанию 320)
   touch "$CS/server.cfg"
