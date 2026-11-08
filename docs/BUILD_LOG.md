@@ -40,3 +40,4 @@
 | 2026-11-08 | 5 | Модели пользователя: Poison Launcher (5), David Black, Carlito, Alice, катана, aknife, M4A1 через `check_model.py` | OK (spore.mdl — обратный обход, у автора так же); heavy_zombie и dual_infinity — формат Source, отклонены |
 | 2026-11-08 | 5 | `apply_zclass_models.py` (HUMAN) на копии `zombieplague.ini` | OK: без файлов — без изменений, с 2 файлами — HUMAN из 2 моделей, повтор идемпотентен |
 | 2026-11-08 | — | Полная пересборка (12 плагинов, включая Poison Launcher) | OK, 0 предупреждений. Runtime на HLDS не проверялся |
+| 2026-11-08 | 3 | `cso_human_dodge.sma` (своя реализация вместо `zp_human_dodge`) | OK, 0 предупреждений. Runtime не проверялся |
