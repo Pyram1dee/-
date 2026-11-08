@@ -56,3 +56,14 @@
 нужен плагин, выставляющий свою модель по уникальному пути — решение за владельцем (см. DECISIONS).
 | `zp_human_dodge.rar` (SHA-256 `60f10c70…7b14`): звук `human_dodge.wav` | `sound/zombie_plague/human_dodge/human_dodge.wav` | **подключён** (локальная замена); плагин без звука работает | PomanoB, лицензия не указана — не в git |
 | Jetpack+Bazooka 3.2 (pastebin.com/raw/S89uALZp, SHA-256 `51bf25fe…2e32`) | плагин `cso_jetpack.amxx`; ресурсы — базовый Half-Life (`models/*_egon.mdl`, `models/rpgrocket.mdl`, `sprites/smoke|xfireball3|white|zerogxplode.spr`) | **подключён** (патч) | B!gBud/KleeneX, «provided as is» — исходник не в git |
+
+### Поставка 2026-11-08 (вторая)
+| Архив | Содержимое | Статус |
+|---|---|---|
+| `skull-5_3.rar` | скин G3SG1 для CS:Source (MDL v44, .vvd/.vtx) | **непригоден** для GoldSrc |
+| `cso_dual_infinity_skin_-_updated_ar_1.rar` | побайтно тот же архив, что раньше: Source (MDL v44) | **непригоден** |
+| `cso_katana.rar` | `v_knife.mdl` (катана, CSO) + замена стандартных звуков ножа | отложен `vendor/assets_staged/cso_katana`; звуки-замены стандартных файлов не используются (клиентам не скачиваются) |
+| `1148_male.rar` | `v_knife.mdl` (внутри `v_razor.mdl`) + `p_knife.mdl` — кинжал | отложен `vendor/assets_staged/razor_1148` — кандидат **Dagger** |
+| `single-nata-knife.zip` | `v_knife.mdl`/`p_knife.mdl` — нож-мачете «Nata» | отложен `vendor/assets_staged/nata_knife` — кандидат **Axe**? |
+| `984_SHEEPSWORD.rar` | `v_sheepsword.mdl`/`p_sheepsword.mdl` + HUD-спрайты | отложен `vendor/assets_staged/sheepsword` |
+Все модели ножей проверены `check_model.py --knife`: формат GoldSrc, 8 анимаций в порядке ножа CS, все кадры декодируются.
