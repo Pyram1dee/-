@@ -47,3 +47,9 @@
 ## Deimos (G, эффект — предложение)
 - [ ] Луч виден; у задетого человека выпадает основное оружие/пистолет; нож и гранаты не выпадают.
 - [ ] Выживший не затрагивается при `cso_deimos_affect_survivor 0`.
+
+## Модели классов
+- [ ] После `server.sh deploy` в `zp_zombieclasses.ini`: `[Classic Zombie] MODELS = zombie_classic`.
+- [ ] Карта грузится без `Host_Error`/ошибок precache; клиент скачивает `models/player/zombie_classic/zombie_classic.mdl`.
+- [ ] Зомби класса «Classic Zombie» отображается моделью zombie_classic, анимации бега/атаки/смерти корректны.
+- [ ] Удаление файла модели и повторный deploy → строка не меняется, сервер не падает.

@@ -86,6 +86,8 @@ deploy_plugins() {
     (cd "$VENDOR/assets_override" && find . -type f -print) | sed 's/^/  /'
     cp -rf "$VENDOR/assets_override/." "$CS/"
   fi
+  # модели классов зомби: только если файлы есть на сервере (иначе ZP роняет сервер на precache)
+  python3 -I "$ROOT/scripts/apply_zclass_models.py" "$CS"
 
   cp -f "$ROOT/config/cso_custom.cfg" "$CS/addons/amxmodx/configs/"
   local amxxcfg="$CS/addons/amxmodx/configs/amxx.cfg"
