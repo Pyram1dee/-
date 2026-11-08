@@ -7,10 +7,10 @@
 | Компонент | Статус | Детали |
 |---|---|---|
 | Структура проекта | OK | `python3 scripts/check_project.py` → `Project scaffold OK` |
-| AMX Mod X 1.9 (base + cstrike, Linux) | Скачан, **не запускался** | `https://www.amxmodx.org/amxxdrop/1.9/amxmodx-1.9.0-git5303-{base,cstrike}-linux.tar.gz` (ссылка, на которую ведёт `latest.php?version=1.9&os=linux`) |
+| AMX Mod X 1.9 (base + cstrike, Linux) | Скачан, лежит в `vendor/amxmodx` | `https://www.amxmodx.org/amxxdrop/1.9/amxmodx-1.9.0-git5303-{base,cstrike}-linux.tar.gz` (ссылка, на которую ведёт `latest.php?version=1.9&os=linux`) |
 | SHA-256 base | — | `1ed6898ced2c1fcf225c288b94effc19917e987b284e42911587738ee3c93699` |
 | SHA-256 cstrike | — | `a2a5ef44bb366a90adf432c708ac49eb63b4b44d7b0de123e8cd52395d27b8e9` |
-| Компилятор `amxxpc` | Есть в архиве, **запуск запрещён** | ELF 32-bit i386. 32-битные библиотеки (`libc6:i386`, `libstdc++6:i386`) установлены через apt. Права сессии не дают запускать скачанный бинарник ("Code from External") — нужно разрешение пользователя |
+| Компилятор `amxxpc` | **Работает** | AMX Mod X Compiler 1.9.0.5303, ELF 32-bit i386; нужны `libc6:i386`, `libstdc++6:i386` (apt). Запускается только через `./scripts/build.sh` (разрешено правилом в `.claude/settings.local.json`) |
 | Include AMXX (`amxmodx`, `fakemeta`, `hamsandwich`, `cstrike`, `fun`, `engine`) | Есть в архиве | `addons/amxmodx/scripting/include` |
 | ZP 4.3 FIX (`zombie_plague40.sma`, `zombieplague.inc`) | **Отсутствует** | forums.alliedmods.net отвечает 403 через прокси среды. Нужно предоставить файл в `vendor/` |
 | HLDS / ReHLDS (cstrike) | **Отсутствует** | SteamCMD (`media.steampowered.com`) доступен по сети, но запуск SteamCMD/HLDS — тоже запуск внешних бинарников, требует разрешения |
@@ -44,6 +44,6 @@ vendor/
 
 ## Блокеры (на 2026-11-08)
 
-1. Нет разрешения запускать `amxxpc` → ни один `.sma` не скомпилирован.
+1. ~~Компилятор~~ — снят 2026-11-08, `cso_core.sma` собран.
 2. Нет ZP 4.3 FIX → классы, магазин, Deimos Round и VIP Hammer (всё, что зависит от `zombieplague.inc`) по плану **не начинаются**.
 3. Нет HLDS → этап 1 (запуск сервера) не выполнен.

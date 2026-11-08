@@ -29,7 +29,8 @@ files=("$ROOT"/src/*.sma)
 for sma in "${files[@]}"; do
   name="$(basename "$sma" .sma)"
   echo "== $name" | tee -a "$LOG"
-  if "$AMXXPC" "${INC[@]}" -o"$OUT/$name.amxx" "$sma" >>"$LOG" 2>&1; then
+  sma="$(cd "$(dirname "$sma")" && pwd)/$(basename "$sma")"
+  if (cd "$SCRIPTING" && ./amxxpc "${INC[@]}" -o"$OUT/$name.amxx" "$sma") >>"$LOG" 2>&1; then
     echo "   OK" | tee -a "$LOG"
   else
     echo "   FAIL (см. $LOG)" | tee -a "$LOG"

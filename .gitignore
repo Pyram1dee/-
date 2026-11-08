@@ -3,3 +3,4 @@ build/
 *.amxx
 *.log
 __pycache__/
+.claude/settings.local.json
