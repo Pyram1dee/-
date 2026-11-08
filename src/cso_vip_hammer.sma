@@ -24,7 +24,7 @@
 #define FROZEN_GRAVITY 99999.0
 #define TASK_SPAWN 52100
 
-// Модели нужно получить законно (assets/MANIFEST.md); без них остаётся обычный нож
+// Собственные модели проекта (assets/models/cso, генератор tools/mdl); без них остаётся обычный нож
 new const HAMMER_V_MODEL[] = "models/cso/v_hammer.mdl"
 new const HAMMER_P_MODEL[] = "models/cso/p_hammer.mdl"
 

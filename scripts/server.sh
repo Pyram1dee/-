@@ -77,6 +77,10 @@ deploy_plugins() {
   cp -f "$ZP_DIR/addons/amxmodx/configs/plugins-zplague.ini" "$ini"
   { echo; echo "; --- CSO Custom Edition (config/plugins-cso.ini)"; grep -vE '^\s*(;|$)' "$ROOT/config/plugins-cso.ini" | sed 's/$/ debug/'; } >> "$ini"
 
+  # собственные модели проекта
+  mkdir -p "$CS/models/cso"
+  cp -f "$ROOT"/assets/models/cso/*.mdl "$CS/models/cso/"
+
   cp -f "$ROOT/config/cso_custom.cfg" "$CS/addons/amxmodx/configs/"
   local amxxcfg="$CS/addons/amxmodx/configs/amxx.cfg"
   grep -q 'cso_custom.cfg' "$amxxcfg" || echo 'exec addons/amxmodx/configs/cso_custom.cfg' >> "$amxxcfg"

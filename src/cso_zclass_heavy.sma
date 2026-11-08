@@ -6,7 +6,8 @@
  *  - лимит ловушек на игрока, время жизни, минимальная дистанция между ловушками;
  *  - все ловушки удаляются в конце/начале раунда, ловушки игрока — при выходе;
  *  - пойманный освобождается по таймеру, при смерти, заражении, конце раунда.
- * Модель heavy_zombie.zip была в Source-формате и не подходит (TECH_SPEC п. 7).
+ * Модель heavy_zombie.zip была в Source-формате и не подходит (TECH_SPEC п. 7);
+ * используется собственная модель assets/models/cso/zombitrap.mdl.
  */
 
 #include <amxmodx>
@@ -23,7 +24,7 @@
 #define TASK_RELEASE 51500
 
 new const TRAP_CLASS[] = "cso_trap"
-new const TRAP_MODEL[] = "models/cso/zombitrap.mdl"
+new const TRAP_MODEL[] = "models/cso/zombitrap.mdl" // assets/models/cso, генератор tools/mdl
 new const TRAP_MODEL_FALLBACK[] = "models/w_weaponbox.mdl"
 new const Float:TRAP_MINS[3] = { -16.0, -16.0, 0.0 }
 new const Float:TRAP_MAXS[3] = { 16.0, 16.0, 12.0 }

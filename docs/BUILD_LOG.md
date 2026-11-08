@@ -26,3 +26,7 @@
 | 2026-11-08 | 4 | Полная пересборка 11 плагинов | OK, 0 предупреждений |
 | 2026-11-08 | 4 | `scripts/check_cvars.py` | OK: 58 CVAR в `cso_custom.cfg` совпадают с `register_cvar` |
 | 2026-11-08 | 1 | `scripts/server.sh` | Написан, **не запускался** (нужно разрешение на запуск SteamCMD/HLDS). Сервер НЕ протестирован |
+| 2026-11-08 | 5 | `tools/mdl/goldsrc_mdl.py` — парсер MDL v10 на эталонных моделях ZP (`v_knife_zombie`, `v_grenade_frost`, `zombie_source`) | OK: число треугольников из tri-команд совпадает с numtris, анимации всех последовательностей декодируются; найдены и исправлены 3 ошибки смещений в форматах |
+| 2026-11-08 | 5 | `tools/mdl/build_models.py` → `coffin.mdl`, `zombitrap.mdl`, `v_hammer.mdl`, `p_hammer.mdl` | OK |
+| 2026-11-08 | 5 | `tools/mdl/validate.py` | OK: воспроизводимость байт-в-байт, обход 100 % по часовой, ошибка анимации ≤ 0.016 юнита, габариты в bbox плагинов. Клиент CS 1.6 не запускался |
+| 2026-11-08 | 5 | `cso_zclass_undertaker` (bbox 64, HULL_HUMAN), `cso_zclass_heavy`, `cso_vip_hammer` | OK, 0 предупреждений |

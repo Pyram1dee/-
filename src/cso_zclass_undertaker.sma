@@ -20,11 +20,11 @@
 #define AUTHOR  "CSO Custom Project"
 
 new const COFFIN_CLASS[] = "cso_coffin"
-// Модель гроба нужно получить законно и положить по этому пути (assets/MANIFEST.md).
+// Собственная модель проекта: assets/models/cso/coffin.mdl (генератор tools/mdl/build_models.py).
 new const COFFIN_MODEL[] = "models/cso/coffin.mdl"
 new const COFFIN_MODEL_FALLBACK[] = "models/w_weaponbox.mdl" // есть в базовой CS 1.6
 new const Float:COFFIN_MINS[3] = { -16.0, -16.0, 0.0 }
-new const Float:COFFIN_MAXS[3] = { 16.0, 16.0, 36.0 }
+new const Float:COFFIN_MAXS[3] = { 16.0, 16.0, 64.0 } // стоячий гроб из tools/mdl/build_models.py
 
 new const ZC_NAME[]  = "Undertaker"
 new const ZC_INFO[]  = "Гроб [G]"
@@ -146,12 +146,12 @@ bool:find_place(id, Float:out[3])
 		return false
 	}
 
-	// 3. hull 32x32x36 (HULL_HEAD, центр в середине) — нет стен и игроков
+	// 3. hull 32x32x72 (HULL_HUMAN, центр в середине) покрывает гроб 32x32x64 — нет стен и игроков
 	new Float:center[3]
 	center[0] = floor[0]
 	center[1] = floor[1]
-	center[2] = floor[2] + 19.0
-	engfunc(EngFunc_TraceHull, center, center, DONT_IGNORE_MONSTERS, HULL_HEAD, 0, tr)
+	center[2] = floor[2] + 37.0
+	engfunc(EngFunc_TraceHull, center, center, DONT_IGNORE_MONSTERS, HULL_HUMAN, 0, tr)
 	new bool:blocked = (get_tr2(tr, TR_StartSolid) || get_tr2(tr, TR_AllSolid))
 	free_tr2(tr)
 	if (blocked)
