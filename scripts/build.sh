@@ -27,14 +27,18 @@ shopt -s nullglob
 files=("$ROOT"/src/*.sma)
 if [[ $# -gt 0 ]]; then
   files=("$@")
-elif [[ -d "$ROOT/vendor/poison_launcher" ]]; then
-  # сторонний Poison Launcher: адаптируется патчем, исходник автора не в git
-  if python3 -I "$ROOT/tools/thirdparty/patch_poison_launcher.py" | tee -a "$LOG"; then
-    files+=("$ROOT/build/thirdparty/cso_poison_launcher.sma")
-  else
-    echo "   FAIL: патч Poison Launcher не применился" | tee -a "$LOG"
-    fail=1
-  fi
+else
+  # сторонние плагины: адаптируются патчами tools/thirdparty, исходники авторов не в git
+  for pair in "poison_launcher:cso_poison_launcher" "jetpack:cso_jetpack"; do
+    vdir="${pair%%:*}"; out="${pair#*:}"
+    [[ -d "$ROOT/vendor/$vdir" ]] || continue
+    if python3 -I "$ROOT/tools/thirdparty/patch_${vdir}.py" | tee -a "$LOG"; then
+      files+=("$ROOT/build/thirdparty/$out.sma")
+    else
+      echo "   FAIL: патч $vdir не применился" | tee -a "$LOG"
+      fail=1
+    fi
+  done
 fi
 for sma in "${files[@]}"; do
   name="$(basename "$sma" .sma)"

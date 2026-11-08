@@ -55,3 +55,4 @@
 Отложенные модели: подмена стандартных `v_knife.mdl`/`v_m4a1.mdl` на сервере клиентам не скачивается,
 нужен плагин, выставляющий свою модель по уникальному пути — решение за владельцем (см. DECISIONS).
 | `zp_human_dodge.rar` (SHA-256 `60f10c70…7b14`): звук `human_dodge.wav` | `sound/zombie_plague/human_dodge/human_dodge.wav` | **подключён** (локальная замена); плагин без звука работает | PomanoB, лицензия не указана — не в git |
+| Jetpack+Bazooka 3.2 (pastebin.com/raw/S89uALZp, SHA-256 `51bf25fe…2e32`) | плагин `cso_jetpack.amxx`; ресурсы — базовый Half-Life (`models/*_egon.mdl`, `models/rpgrocket.mdl`, `sprites/smoke|xfireball3|white|zerogxplode.spr`) | **подключён** (патч) | B!gBud/KleeneX, «provided as is» — исходник не в git |
