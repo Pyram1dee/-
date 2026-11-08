@@ -12,7 +12,7 @@
 | SHA-256 cstrike | — | `a2a5ef44bb366a90adf432c708ac49eb63b4b44d7b0de123e8cd52395d27b8e9` |
 | Компилятор `amxxpc` | **Работает** | AMX Mod X Compiler 1.9.0.5303, ELF 32-bit i386; нужны `libc6:i386`, `libstdc++6:i386` (apt). Запускается только через `./scripts/build.sh` (разрешено правилом в `.claude/settings.local.json`) |
 | Include AMXX (`amxmodx`, `fakemeta`, `hamsandwich`, `cstrike`, `fun`, `engine`) | Есть в архиве | `addons/amxmodx/scripting/include` |
-| ZP 4.3 FIX (`zombie_plague40.sma`, `zombieplague.inc`) | **Отсутствует** | forums.alliedmods.net отвечает 403 через прокси среды. Нужно предоставить файл в `vendor/` |
+| ZP 4.3 Fix5a (`zombie_plague40.sma`, `zombieplague.inc`) | **Есть**, `vendor/zp43fix5a`, include в `vendor/include` | Источник указан пользователем: https://albinzm.com/resources/zombie-plague-4-3-fix5a-addons-2026, файл `ZP 4.3 FIX5A _2026_.zip`, SHA-256 `ff128c4c3cdae61f7772301270940db87caebcc1f89f30bfe2cddadd5e8740a9`. `PLUGIN_VERSION = "4.3 Fix5a"`, автор MeRcyLeZZ. API: 34 native, 15 forward. Сборка выпуска 2026 года содержит доработки (например, затухание трупов `zp_corpse_fade`), т.е. это не байт-в-байт оригинал с AlliedModders |
 | HLDS / ReHLDS (cstrike) | **Отсутствует** | SteamCMD (`media.steampowered.com`) доступен по сети, но запуск SteamCMD/HLDS — тоже запуск внешних бинарников, требует разрешения |
 | Metamod / Metamod-r | **Отсутствует** | — |
 | Poison Launcher 1.8.1 (`9778_-_amxx_public_poison_launcher_1.8.1.rar`) | **Отсутствует** | Пользовательский архив, нужен в `vendor/` |
@@ -45,5 +45,5 @@ vendor/
 ## Блокеры (на 2026-11-08)
 
 1. ~~Компилятор~~ — снят 2026-11-08, `cso_core.sma` собран.
-2. Нет ZP 4.3 FIX → классы, магазин, Deimos Round и VIP Hammer (всё, что зависит от `zombieplague.inc`) по плану **не начинаются**.
+2. ~~ZP 4.3 FIX~~ — снят: комплект Fix5a в `vendor/zp43fix5a`.
 3. Нет HLDS → этап 1 (запуск сервера) не выполнен.
