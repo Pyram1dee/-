@@ -18,7 +18,7 @@ for f in list((root / "src").glob("*.sma")) + list((root / "src" / "include").gl
 # CVAR, которые регистрирует магазин по запросу внешних плагинов (cso_shop_register_item_cvar),
 # в т.ч. из патчей сторонних плагинов в tools/thirdparty
 for f in list((root / "src").glob("*.sma")) + list((root / "tools" / "thirdparty").glob("*.py")):
-    for m in re.finditer(r'cso_shop_register_item_cvar\([^,]+,\s*\\?"(cso_[a-z0-9_]+)\\?"', f.read_text(encoding="utf-8")):
+    for m in re.finditer(r'cso_shop_(?:register_item_cvar|set_item_round_limit)\([^,]+,\s*\\?"(cso_[a-z0-9_]+)\\?"', f.read_text(encoding="utf-8")):
         reg.setdefault(m.group(1), f.name)
 
 cfg = {}

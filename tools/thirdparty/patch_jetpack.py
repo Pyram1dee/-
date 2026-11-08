@@ -21,10 +21,12 @@ PATCHES = [
     ("#include <cstrike>\n", "#include <cstrike>\n#include <zombieplague>\n#include <cso_shop>\n", 1, "API ZP и магазина"),
     # 1. бесплатная выдача по /jetpack любому (включая зомби) -> покупка только в Human Shop
     ('\tregister_clcmd("say /jetpack", "cmdBuy")\n',
-     '\t// CSO: бесплатный "say /jetpack" убран — покупка только в Human Shop\n'
-     '\tg_jp_item = cso_shop_register_item_cvar("Jetpack + Bazooka", "cso_jetpack_cost", "30", CSO_SHOP_CAT_SPECIAL)\n'
+     '\t// CSO: бесплатный "say /jetpack" убран. Купить нельзя: только VIP через /vipmenu,\n'
+     '\t// не чаще раза в cso_jetpack_vip_rounds раундов; остальные люди — только подобрать с пола\n'
+     '\tg_jp_item = cso_shop_register_item_cvar("Jetpack + Bazooka", "cso_jetpack_cost", "0", CSO_SHOP_CAT_VIP)\n'
+     '\tcso_shop_set_item_round_limit(g_jp_item, "cso_jetpack_vip_rounds", "3")\n'
      '\tregister_think("zp_jp_rocket", "cso_rocket_think")\n'
-     '\tregister_event("HLTV", "cso_jp_new_round", "a", "1=0", "2=0")\n', 1, "регистрация в магазине"),
+     '\tregister_event("HLTV", "cso_jp_new_round", "a", "1=0", "2=0")\n', 1, "только VIP-меню, раз в 3 раунда"),
     ('\tp_JetpackCost = register_cvar("Jetpack_Money_Cost", "100")  // Cost of Jetpack in CS Money \n', "", 1, "мёртвая «цена в деньгах CS»"),
     ('\tp_BuyJetpack = register_cvar("Jetpack_buy", "1") // If you  don\'t want to buy jetpack set it to 0\n', "", 1, "мёртвый переключатель покупки"),
     ("new p_JetpackCost\nnew p_BuyJetpack\n", "new g_jp_item\nnew bool:g_snd_jet, bool:g_snd_blow\n", 1, "переменные CSO"),

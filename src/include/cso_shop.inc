@@ -17,6 +17,7 @@ enum
 	CSO_SHOP_CAT_HEAVY,
 	CSO_SHOP_CAT_EQUIPMENT,
 	CSO_SHOP_CAT_SPECIAL,
+	CSO_SHOP_CAT_VIP,      // только через /vipmenu и только VIP (cso_vip_flag)
 	CSO_SHOP_CAT_COUNT
 }
 
@@ -32,6 +33,12 @@ native cso_shop_register_item(const name[], cost, category = CSO_SHOP_CAT_SPECIA
  * @return id предмета или -1
  */
 native cso_shop_register_item_cvar(const name[], const cvarname[], const defcost[], category = CSO_SHOP_CAT_SPECIAL)
+
+/**
+ * Ограничение: игрок (по SteamID) получает предмет не чаще раза в N раундов.
+ * Магазин регистрирует CVAR cvarname со значением по умолчанию defrounds (0 — без ограничения).
+ */
+native cso_shop_set_item_round_limit(itemid, const cvarname[], const defrounds[])
 
 /**
  * Вызывается после списания ammo packs за внешний предмет.

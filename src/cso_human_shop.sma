@@ -19,7 +19,7 @@
 #include <zombieplague>
 
 #define PLUGIN  "[CSO] Human Shop"
-#define VERSION "0.1.0"
+#define VERSION "0.2.0"
 #define AUTHOR  "CSO Custom Project"
 
 // Категории дублируют cso_shop.inc (include не подключаем: в нём #pragma reqlib на самого себя)
@@ -30,9 +30,10 @@ enum
 	CAT_HEAVY,
 	CAT_EQUIPMENT,
 	CAT_SPECIAL,
+	CAT_VIP,       // только через /vipmenu, в обычном магазине не показывается
 	CAT_COUNT
 }
-new const CAT_NAMES[CAT_COUNT][] = { "Пистолеты", "Винтовки", "Тяжёлое оружие", "Снаряжение", "Особое" }
+new const CAT_NAMES[CAT_COUNT][] = { "Пистолеты", "Винтовки", "Тяжёлое оружие", "Снаряжение", "Особое", "VIP меню" }
 
 enum
 {
@@ -62,7 +63,10 @@ const SECONDARY_BITSUM = (1<<CSW_P228)|(1<<CSW_ELITE)|(1<<CSW_FIVESEVEN)|(1<<CSW
 new Array:g_item_name, Array:g_item_cat, Array:g_item_type, Array:g_item_builtin, Array:g_item_cost, Array:g_item_pcvar
 new g_item_count
 
-new g_pcv_enable, g_pcv_survivor
+new g_pcv_enable, g_pcv_survivor, g_pcv_vip_flag
+new Array:g_item_rounds
+new Trie:g_round_taken   // "steamid|item" -> номер раунда последнего получения
+new g_round_no = 1
 new g_fw_bought
 
 public plugin_natives()
@@ -77,6 +81,8 @@ public plugin_natives()
 	g_item_builtin = ArrayCreate(1, 16)   // индекс в B_* или -1
 	g_item_cost    = ArrayCreate(1, 16)   // цена внешнего предмета
 	g_item_pcvar   = ArrayCreate(1, 16)   // pcvar цены встроенного
+	g_item_rounds  = ArrayCreate(1, 16)   // pcvar «не чаще раза в N раундов» (0 — без ограничения)
+	register_native("cso_shop_set_item_round_limit", "native_set_round_limit")
 }
 
 public plugin_init()
@@ -85,6 +91,8 @@ public plugin_init()
 
 	g_pcv_enable   = register_cvar("cso_shop_enable", "1")
 	g_pcv_survivor = register_cvar("cso_shop_allow_survivor", "0")
+	g_pcv_vip_flag = register_cvar("cso_vip_flag", "t") // общий с VIP Hammer
+	g_round_taken = TrieCreate()
 
 	new cvar[48]
 	for (new i = 0; i < sizeof B_NAME; i++)
@@ -96,6 +104,11 @@ public plugin_init()
 	register_clcmd("say /shop", "cmd_shop")
 	register_clcmd("say_team /shop", "cmd_shop")
 	register_clcmd("cso_shop", "cmd_shop")
+	register_clcmd("say /vipmenu", "cmd_vipmenu")
+	register_clcmd("say_team /vipmenu", "cmd_vipmenu")
+	register_clcmd("say /vm", "cmd_vipmenu")
+	register_clcmd("cso_vipmenu", "cmd_vipmenu")
+	register_event("HLTV", "ev_new_round", "a", "1=0", "2=0")
 
 	g_fw_bought = CreateMultiForward("cso_shop_item_bought", ET_CONTINUE, FP_CELL, FP_CELL)
 }
@@ -108,6 +121,7 @@ add_item(const name[], cat, type, builtin, cost, pcvar)
 	ArrayPushCell(g_item_builtin, builtin)
 	ArrayPushCell(g_item_cost, cost)
 	ArrayPushCell(g_item_pcvar, pcvar)
+	ArrayPushCell(g_item_rounds, 0)
 	return g_item_count++
 }
 
@@ -203,6 +217,95 @@ bool:can_receive(id, item, reason[], len)
 	return true
 }
 
+// native cso_shop_set_item_round_limit(itemid, const cvarname[], const defrounds[])
+public native_set_round_limit(plugin, params)
+{
+	new item = get_param(1)
+	if (item < 0 || item >= g_item_count)
+	{
+		log_error(AMX_ERR_NATIVE, "[CSO Shop] Неверный id предмета %d", item)
+		return 0
+	}
+	new cvarname[48], defval[8]
+	get_string(2, cvarname, charsmax(cvarname))
+	get_string(3, defval, charsmax(defval))
+	ArraySetCell(g_item_rounds, item, register_cvar(cvarname, defval))
+	return 1
+}
+
+// ---------------------------------------------------------------------------
+// VIP и ограничение по раундам
+// ---------------------------------------------------------------------------
+
+bool:is_vip(id)
+{
+	new flags[24]
+	get_pcvar_string(g_pcv_vip_flag, flags, charsmax(flags))
+	new need = read_flags(flags)
+	return (need != 0 && (get_user_flags(id) & need) == need)
+}
+
+taken_key(id, item, key[], len)
+{
+	new auth[40]
+	get_user_authid(id, auth, charsmax(auth)) // по SteamID: перезаход не сбрасывает ограничение
+	formatex(key, len, "%s|%d", auth, item)
+}
+
+// Сколько раундов ещё ждать (0 — можно)
+rounds_left(id, item)
+{
+	new pcvar = ArrayGetCell(g_item_rounds, item)
+	if (!pcvar)
+		return 0
+	new limit = get_pcvar_num(pcvar)
+	if (limit <= 0)
+		return 0
+	new key[64], last
+	taken_key(id, item, key, charsmax(key))
+	if (!TrieGetCell(g_round_taken, key, last))
+		return 0
+	new passed = g_round_no - last
+	return (passed >= limit) ? 0 : limit - passed
+}
+
+mark_taken(id, item)
+{
+	if (!ArrayGetCell(g_item_rounds, item))
+		return
+	new key[64]
+	taken_key(id, item, key, charsmax(key))
+	TrieSetCell(g_round_taken, key, g_round_no)
+}
+
+public ev_new_round()
+{
+	g_round_no++
+}
+
+public cmd_vipmenu(id)
+{
+	if (!is_vip(id))
+	{
+		client_print(id, print_chat, "[CSO] VIP меню доступно только VIP")
+		return PLUGIN_HANDLED
+	}
+	if (!can_use_shop(id, true))
+		return PLUGIN_HANDLED
+	if (!category_has_items(CAT_VIP))
+	{
+		client_print(id, print_chat, "[CSO] В VIP меню пока нет предметов")
+		return PLUGIN_HANDLED
+	}
+	show_items(id, CAT_VIP)
+	return PLUGIN_HANDLED
+}
+
+public plugin_end()
+{
+	TrieDestroy(g_round_taken)
+}
+
 // ---------------------------------------------------------------------------
 // Меню
 // ---------------------------------------------------------------------------
@@ -223,7 +326,7 @@ show_categories(id)
 	new info[4]
 	for (new c = 0; c < CAT_COUNT; c++)
 	{
-		if (!category_has_items(c))
+		if (c == CAT_VIP || !category_has_items(c))
 			continue
 		num_to_str(c, info, charsmax(info))
 		menu_additem(menu, CAT_NAMES[c], info)
@@ -304,6 +407,17 @@ buy_item(id, item)
 	// состояние могло измениться, пока меню было открыто
 	if (!can_use_shop(id, true) || item < 0 || item >= g_item_count)
 		return
+	if (ArrayGetCell(g_item_cat, item) == CAT_VIP && !is_vip(id))
+	{
+		client_print(id, print_chat, "[CSO] Этот предмет доступен только VIP")
+		return
+	}
+	new wait = rounds_left(id, item)
+	if (wait > 0)
+	{
+		client_print(id, print_chat, "[CSO] Снова доступно через %d раунд(а)", wait)
+		return
+	}
 
 	new name[64], reason[64]
 	ArrayGetString(g_item_name, item, name, charsmax(name))
@@ -345,7 +459,8 @@ buy_item(id, item)
 		zp_set_user_ammo_packs(id, packs - cost)
 	}
 
-	client_print(id, print_chat, "[CSO] Куплено: %s за %d AP", name, cost)
+	mark_taken(id, item)
+	client_print(id, print_chat, "[CSO] Получено: %s за %d AP", name, cost)
 }
 
 bool:give_builtin(id, item)
