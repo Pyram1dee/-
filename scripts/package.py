@@ -175,6 +175,10 @@ def main():
     report.append("Недостающие позиции и модели: см. docs/MISSING_RESOURCES.md в репозитории.")
     (OUT / "PACKAGE_REPORT.txt").write_text("\n".join(report) + "\n", encoding="utf-8")
     shutil.copytree(ROOT / "tests", OUT / "tests")
+    # Windows: запуск в консольном режиме (без -console hlds.exe требует AdminServer.dll)
+    (OUT / "start_server.bat").write_bytes(
+        b"@echo off\r\ncd /d \"%~dp0\"\r\n"
+        b"hlds.exe -console -game cstrike +sv_lan 1 +maxplayers 20 +map de_dust2\r\npause\r\n")
 
     zpath = OUT / "CSO_Zombie_Custom_cstrike.zip"
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as zf:
@@ -210,8 +214,12 @@ README = """CSO Zombie 1.6 — Custom Edition. Пакет для установ�
 4. VIP и Gold: в addons/amxmodx/configs/users.ini, например
      "STEAM_0:1:12345" "" "t" "ce"     — VIP
      "STEAM_0:1:12345" "" "s" "ce"     — Gold
-5. Запустите сервер:  hlds -game cstrike +map de_dust2 +maxplayers 20
-   (Linux: ./hlds_run -game cstrike +map de_dust2 +maxplayers 20)
+5. Запустите сервер ОБЯЗАТЕЛЬНО в консольном режиме (-console):
+     Windows: положите start_server.bat рядом с hlds.exe и запустите его, или вручную:
+              hlds.exe -console -game cstrike +sv_lan 1 +maxplayers 20 +map de_dust2
+              (без -console hlds.exe ищет графический модуль AdminServer и падает с ошибкой
+               "Assertion failed ... g_hAdminServerModule != NULL")
+     Linux:   ./hlds_run -console -game cstrike +maxplayers 20 +map de_dust2
 6. В консоли сервера проверьте:
      meta list        — AMX Mod X в статусе RUN
      amxx plugins     — все плагины "running", без "bad load"
