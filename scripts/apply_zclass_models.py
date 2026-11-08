@@ -57,5 +57,33 @@ def main():
     return 0
 
 
+def apply_human_models(cs, cfg=None):
+    """HUMAN = ... в zombieplague.ini — только модели, которые есть на сервере."""
+    cfg = cfg or ROOT / "config" / "human_models.cfg"
+    ini = cs / "addons" / "amxmodx" / "configs" / "zombieplague.ini"
+    if not ini.exists() or not cfg.exists():
+        return
+    wanted = load_map(cfg).get("HUMAN", [])
+    present = [m for m in wanted if (cs / "models" / "player" / m / f"{m}.mdl").is_file()]
+    for m in set(wanted) - set(present):
+        print(f"[human_models] нет models/player/{m}/{m}.mdl — модель пропущена")
+    if not present:
+        print("[human_models] ни одной модели нет — HUMAN не меняется")
+        return
+    raw_lines = ini.read_bytes().decode("latin-1").splitlines(keepends=True)
+    new = "HUMAN = " + " , ".join(present)
+    for i, ln in enumerate(raw_lines):
+        body = ln.rstrip("\r\n")
+        if body.split("=", 1)[0].strip() == "HUMAN":
+            if body != new:
+                print(f"[human_models] {body} -> {new}")
+                raw_lines[i] = new + ln[len(body):]
+                ini.write_bytes("".join(raw_lines).encode("latin-1"))
+            return
+    print("[human_models] строки HUMAN нет в zombieplague.ini")
+
+
 if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        apply_human_models(Path(sys.argv[1]))
     sys.exit(main())

@@ -27,6 +27,13 @@ enum
 native cso_shop_register_item(const name[], cost, category = CSO_SHOP_CAT_SPECIAL)
 
 /**
+ * Регистрирует внешний предмет с ценой из CVAR (магазин регистрирует CVAR сам
+ * и читает цену в момент покупки, поэтому значение из cso_custom.cfg действует).
+ * @return id предмета или -1
+ */
+native cso_shop_register_item_cvar(const name[], const cvarname[], const defcost[], category = CSO_SHOP_CAT_SPECIAL)
+
+/**
  * Вызывается после списания ammo packs за внешний предмет.
  * Верните PLUGIN_HANDLED, если выдать не удалось — стоимость вернётся игроку.
  */

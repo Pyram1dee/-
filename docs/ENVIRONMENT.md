@@ -15,8 +15,8 @@
 | ZP 4.3 Fix5a (`zombie_plague40.sma`, `zombieplague.inc`) | **Есть**, `vendor/zp43fix5a`, include в `vendor/include` | Источник указан пользователем: https://albinzm.com/resources/zombie-plague-4-3-fix5a-addons-2026, файл `ZP 4.3 FIX5A _2026_.zip`, SHA-256 `ff128c4c3cdae61f7772301270940db87caebcc1f89f30bfe2cddadd5e8740a9`. `PLUGIN_VERSION = "4.3 Fix5a"`, автор MeRcyLeZZ. API: 34 native, 15 forward. Сборка выпуска 2026 года содержит доработки (например, затухание трупов `zp_corpse_fade`), т.е. это не байт-в-байт оригинал с AlliedModders |
 | HLDS / ReHLDS (cstrike) | **Отсутствует** | SteamCMD (`media.steampowered.com`) доступен по сети, но запуск SteamCMD/HLDS — тоже запуск внешних бинарников, требует разрешения |
 | Metamod / Metamod-r | **Отсутствует** | — |
-| Poison Launcher 1.8.1 (`9778_-_amxx_public_poison_launcher_1.8.1.rar`) | **Отсутствует** | Пользовательский архив, нужен в `vendor/` |
-| heavy_zombie.zip | **Отсутствует** | Source-форматы, всё равно требуют замены на GoldSrc |
+| Poison Launcher 1.8.1 (`9778_-_amxx_public_poison_launcher_1.8.1.rar`) | **Есть**, `vendor/poison_launcher` | SHA-256 архива `fa99b94310498d8ea29bd48f39a795adea5e2a3b0330cb49a3f11e8e56530d02`, исходника `376cfc36…c9c`. Собирается через патч `tools/thirdparty/patch_poison_launcher.py` |
+| heavy_zombie.zip | Получен, **непригоден** | Source/CS:GO (MDL v49) |
 
 Версии HLDS/Metamod/ZP сознательно не указаны — они не проверены.
 

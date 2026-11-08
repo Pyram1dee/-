@@ -69,6 +69,7 @@ public plugin_natives()
 {
 	register_library("cso_shop")
 	register_native("cso_shop_register_item", "native_register_item")
+	register_native("cso_shop_register_item_cvar", "native_register_item_cvar")
 
 	g_item_name    = ArrayCreate(64, 16)
 	g_item_cat     = ArrayCreate(1, 16)
@@ -131,6 +132,24 @@ public native_register_item(plugin, params)
 	if (cat < 0 || cat >= CAT_COUNT)
 		cat = CAT_SPECIAL
 	return add_item(name, cat, TYPE_EXTERNAL, -1, cost, 0)
+}
+
+// native cso_shop_register_item_cvar(const name[], const cvarname[], const defcost[], category)
+public native_register_item_cvar(plugin, params)
+{
+	new name[64], cvarname[48], defcost[16]
+	get_string(1, name, charsmax(name))
+	get_string(2, cvarname, charsmax(cvarname))
+	get_string(3, defcost, charsmax(defcost))
+	new cat = (params >= 4) ? get_param(4) : CAT_SPECIAL
+	if (!name[0] || !cvarname[0])
+	{
+		log_error(AMX_ERR_NATIVE, "[CSO Shop] Некорректный предмет")
+		return -1
+	}
+	if (cat < 0 || cat >= CAT_COUNT)
+		cat = CAT_SPECIAL
+	return add_item(name, cat, TYPE_EXTERNAL, -1, 0, register_cvar(cvarname, defcost))
 }
 
 // ---------------------------------------------------------------------------

@@ -69,17 +69,23 @@ install_amxx_zp() {
 deploy_plugins() {
   log "Сборка ZP и модулей"
   local zps="$ZP_DIR/addons/amxmodx/scripting"
-  "$ROOT/scripts/build.sh" "$zps/zombie_plague40.sma" "$zps/zp_zclasses40.sma" "$ROOT"/src/*.sma
+  "$ROOT/scripts/build.sh"
+  "$ROOT/scripts/build.sh" "$zps/zombie_plague40.sma" "$zps/zp_zclasses40.sma"
   cp -f "$ROOT"/build/plugins/*.amxx "$CS/addons/amxmodx/plugins/"
 
   # Модули CSO грузятся ПОСЛЕ ядра ZP: дописываем их в plugins-zplague.ini
   local ini="$CS/addons/amxmodx/configs/plugins-zplague.ini"
   cp -f "$ZP_DIR/addons/amxmodx/configs/plugins-zplague.ini" "$ini"
-  { echo; echo "; --- CSO Custom Edition (config/plugins-cso.ini)"; grep -vE '^\s*(;|$)' "$ROOT/config/plugins-cso.ini" | sed 's/$/ debug/'; } >> "$ini"
+  { echo; echo "; --- CSO Custom Edition (config/plugins-cso.ini)"; sed 's/\s*;.*$//' "$ROOT/config/plugins-cso.ini" | grep -vE '^\s*$' | sed 's/$/ debug/'; } >> "$ini"
 
   # собственные модели проекта
   mkdir -p "$CS/models/cso"
   cp -f "$ROOT"/assets/models/cso/*.mdl "$CS/models/cso/"
+  # ресурсы Poison Launcher (архив пользователя, не в git)
+  if [[ -d "$VENDOR/poison_launcher/cstrike" ]]; then
+    cp -rf "$VENDOR/poison_launcher/cstrike/models" "$VENDOR/poison_launcher/cstrike/sound" \
+           "$VENDOR/poison_launcher/cstrike/sprites" "$CS/"
+  fi
   # локальные замены пользователя (не в git): vendor/assets_override/<путь на сервере>
   if [[ -d "$VENDOR/assets_override" ]]; then
     log "Локальные замены ресурсов из vendor/assets_override:"

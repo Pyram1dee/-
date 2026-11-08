@@ -36,3 +36,21 @@
 Модель класса назначается в `config/zclass_models.cfg` (сейчас: `Classic Zombie = zombie_classic`). `scripts/apply_zclass_models.py`
 при деплое меняет строку `MODELS` в `zp_zombieclasses.ini` только если файл модели есть на сервере — ZP 4.3 кэширует
 модель класса без проверки, и отсутствующий файл роняет сервер при загрузке карты.
+
+### Поставка 2026-11-08 (архивы пользователя)
+
+| Что | Куда на сервере | Статус | Происхождение / лицензия |
+|---|---|---|---|
+| Poison Launcher 1.8.1 (`9778_-_amxx_public_poison_launcher_1.8.1.rar`, SHA-256 `fa99b943…0d02`) | `models/zm/*`, `sound/weapons/plaunch*`, `sprites/poison_*.spr` + плагин `cso_poison_launcher.amxx` | **подключён** (исходник адаптирован патчем, см. ниже) | плагин Re.Act!ve, лицензия не указана; модели/спрайты в стиле CSO — не в git |
+| David Black (`terror.mdl`) | `models/player/cso_davidblack/cso_davidblack.mdl` | **подключён** как модель людей | неизвестно — не в git |
+| Carlito (`guerilla.mdl`, внутри `mercenarytr.mdl`) | `models/player/cso_carlito/cso_carlito.mdl` | **подключён** как модель людей | неизвестно — не в git |
+| Alice (`ma_alice_blue.mdl`) | `models/player/cso_alice/cso_alice.mdl` | **подключён** как модель людей | неизвестно — не в git. `ma_alice_blueT.mdl` и `.tga` не нужны: текстуры внутри основного файла |
+| Katana Gold CSO (`v_knife`/`p_knife`) | — | отложен в `vendor/assets_staged/katana_gold` | CSO (Nexon), ссылка dream-x.ru — не в git |
+| aknife (`v_knife`, `p_aknife1`) | — | отложен в `vendor/assets_staged/aknife` | анимации `Nexon_CSO_*` — CSO (Nexon) |
+| Golden M4A1 (`v_m4a1.mdl`) | — | отложен в `vendor/assets_staged/golden_m4a1` | помечен «[NO CSO]», автор неизвестен |
+| `heavy_zombie.zip` | — | **не подходит** | Source/CS:GO, MDL версии 49 (+ .vvd/.vtx/.vtf) — GoldSrc не загружает |
+| `cso_dual_infinity_skin` | — | **не подходит** | Source/CS:S, MDL версии 44 |
+
+Модели людей назначаются строкой `HUMAN` в `zombieplague.ini` по `config/human_models.cfg` — только присутствующие на сервере.
+Отложенные модели: подмена стандартных `v_knife.mdl`/`v_m4a1.mdl` на сервере клиентам не скачивается,
+нужен плагин, выставляющий свою модель по уникальному пути — решение за владельцем (см. DECISIONS).

@@ -40,10 +40,22 @@ def main():
         for f in range(s["numframes"]):
             g.pose(m, si, f)
     print(f"  последовательностей {len(m['sequences'])}: {[s['label'] for s in m['sequences']]} — все кадры декодируются")
-    w = v.winding(data)
-    print(f"  обход треугольников по часовой снаружи: {w:.0%}")
-    if w < 0.5:
-        problems.append("обход треугольников обратный (модель будет «вывернутой»)")
+    if not m["bodyparts"]:
+        print("  файл текстур (…T.mdl): геометрии нет — проверены только текстуры")
+    else:
+        w = v.winding(data)
+        print(f"  обход треугольников по часовой снаружи: {w:.0%}")
+        if w < 0.5:
+            problems.append("обход треугольников обратный (модель будет «вывернутой»)")
+        if not m["textures"]:
+            tfile = Path(a.mdl[:-4] + "T.mdl")
+            if not tfile.exists():
+                problems.append(f"текстуры во внешнем файле, но нет {tfile.name}")
+            else:
+                tm = g.read_mdl(tfile.read_bytes())
+                print(f"  текстуры из {tfile.name}: {len(tm['textures'])}")
+                if m["skinref"] and len(tm["textures"]) < m["skinref"]:
+                    problems.append(f"в {tfile.name} {len(tm['textures'])} текстур, модель ссылается на {m['skinref']}")
     if a.knife:
         n = len(m["sequences"])
         if n < len(KNIFE_SEQ):
@@ -54,7 +66,7 @@ def main():
                 print(f"  ВНИМАНИЕ: имена {labels} отличаются от {KNIFE_SEQ}; игра выбирает анимации по индексу")
             else:
                 print("  порядок последовательностей совпадает с ножом CS 1.6")
-    if a.preview:
+    if a.preview and m["textures"] and m["bodyparts"]:
         r.render(m, 0, 0, 320, view=a.knife).save(a.preview)
         print("  превью:", a.preview)
     print("ИТОГ:", "OK" if not problems else "; ".join(problems))

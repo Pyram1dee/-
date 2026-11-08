@@ -33,3 +33,10 @@
 | 2026-11-08 | 5 | `v_hammer.mdl` пользователя (`hammer.zip`) через `tools/mdl/check_model.py --knife` | OK: формат, 8 анимаций ножа, все кадры, обход 100 %. Установлен как локальная замена, не в git. В клиенте не проверялся |
 | 2026-11-08 | 5 | `zombie_classic.mdl` пользователя через `check_model.py` | OK: модель игрока, 111 последовательностей как у `zombie_source`, все кадры. Локальная замена, не в git. В клиенте не проверялась |
 | 2026-11-08 | 5 | `scripts/apply_zclass_models.py` на копии `zp_zombieclasses.ini` | OK: без файла модели — без изменений; с файлом — меняется одна строка MODELS; повторный запуск идемпотентен; окончания строк сохранены |
+| 2026-11-08 | 3 | Poison Launcher 1.8.1, оригинал | OK с 1 предупреждением (`client_disconnect` deprecated); не используется |
+| 2026-11-08 | 3 | `cso_poison_launcher.sma` после патча (1-я попытка) | FAIL: `return` без `;` склеился с блоком — исправлено в патче |
+| 2026-11-08 | 3 | `cso_poison_launcher.sma` после патча | OK, 0 предупреждений; все 13 precache-ресурсов есть в архиве/базовой CS |
+| 2026-11-08 | 3 | `cso_human_shop.sma` (+ `cso_shop_register_item_cvar`) | OK, 0 предупреждений |
+| 2026-11-08 | 5 | Модели пользователя: Poison Launcher (5), David Black, Carlito, Alice, катана, aknife, M4A1 через `check_model.py` | OK (spore.mdl — обратный обход, у автора так же); heavy_zombie и dual_infinity — формат Source, отклонены |
+| 2026-11-08 | 5 | `apply_zclass_models.py` (HUMAN) на копии `zombieplague.ini` | OK: без файлов — без изменений, с 2 файлами — HUMAN из 2 моделей, повтор идемпотентен |
+| 2026-11-08 | — | Полная пересборка (12 плагинов, включая Poison Launcher) | OK, 0 предупреждений. Runtime на HLDS не проверялся |

@@ -18,14 +18,24 @@ if [[ ! -x "$AMXXPC" ]]; then
 fi
 
 mkdir -p "$OUT" "$LOGDIR"
+fail=0
 INC=(-i"$SCRIPTING/include")
 [[ -d "$ROOT/vendor/include" ]] && INC+=(-i"$ROOT/vendor/include")
 [[ -d "$ROOT/src/include" ]] && INC+=(-i"$ROOT/src/include")
 
-fail=0
 shopt -s nullglob
 files=("$ROOT"/src/*.sma)
-[[ $# -gt 0 ]] && files=("$@")
+if [[ $# -gt 0 ]]; then
+  files=("$@")
+elif [[ -d "$ROOT/vendor/poison_launcher" ]]; then
+  # сторонний Poison Launcher: адаптируется патчем, исходник автора не в git
+  if python3 -I "$ROOT/tools/thirdparty/patch_poison_launcher.py" | tee -a "$LOG"; then
+    files+=("$ROOT/build/thirdparty/cso_poison_launcher.sma")
+  else
+    echo "   FAIL: патч Poison Launcher не применился" | tee -a "$LOG"
+    fail=1
+  fi
+fi
 for sma in "${files[@]}"; do
   name="$(basename "$sma" .sma)"
   echo "== $name" | tee -a "$LOG"
