@@ -17,3 +17,8 @@
 | 2026-11-08 | 2 | `cso_zclass_nurse.sma` | OK, 0 предупреждений |
 | 2026-11-08 | 2 | `cso_zclass_deimos.sma` | OK, 0 предупреждений |
 | 2026-11-08 | 2 | Полная пересборка 8 плагинов | OK, 0 предупреждений. **Runtime не проверен** (нет HLDS), чек-лист `tests/TEST_CLASSES.md` не пройден |
+| 2026-11-08 | 3 | `cso_deimos_round.sma` | OK, 0 предупреждений |
+| 2026-11-08 | 3 | `cso_human_shop.sma` (1-я попытка) | FAIL: `menu_items` конфликтует с native AMXX — колбэки переименованы |
+| 2026-11-08 | 3 | `cso_human_shop.sma` | OK, 0 предупреждений |
+| 2026-11-08 | 3 | `tests/compile/test_shop_api.sma` (потребитель `cso_shop.inc`) | OK |
+| 2026-11-08 | 3 | Poison Launcher adapter | НЕ НАЧАТ: нет архива `9778_-_amxx_public_poison_launcher_1.8.1.rar` |
