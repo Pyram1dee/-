@@ -89,3 +89,4 @@
 - Структура: `src/` → `source/` (ТЗ §15); `INSTALL.md`; список недостающего — `docs/MISSING_RESOURCES.md`.
 - 2026-11-08 (подтверждено пользователем): отключение стандартных классов ZP; `zp_buy_custom 0`; магазин зомби/классы через Game Menu ZP; Deimos Round HP 500; джетпак в VIP меню; «Poison» = Poison Launcher; Speed Knife = Katana Gold.
 - 2026-11-08 (подтверждено): Axe = Nata (`single-nata-knife`), Dagger = `v_razor` (`1148_male`), Speed Knife — Katana Gold без изменений. Модели — локальные замены `vendor/assets_override/models/cso/{v,p}_{axe,dagger}.mdl`, в git не входят. `cso_katana` и `SHEEPSWORD` не используются (лишние ножи ТЗ запрещает).
+- 2026-11-08: установочный архив собирается `scripts/package.py` (распаковка в `cstrike/`). Включает AMXX и Metamod-P для Linux и Windows; `liblist.gam` не перезаписывается — строка gamedll меняется вручную по README в архиве. В пакетный `cso_custom.cfg` добавлены `sv_maxspeed 400` и `sv_allowdownload 1`.
