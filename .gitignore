@@ -1,0 +1,5 @@
+vendor/
+build/
+*.amxx
+*.log
+__pycache__/
